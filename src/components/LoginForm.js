@@ -5,21 +5,26 @@ import firebase from 'firebase';
 import { Card, CardSection, Button, Input, Spinner } from './common';
 
 
-class LoginForm extends React.Component {
-  state = { email: '', password: '', error: '', loading: false };
+class LoginForm extends Component {
+  state = { 
+    email: '', 
+    password: '', 
+    error: '', 
+    loading: false 
+  };
 
   onButtonPress() {
-    // const { email, password } = this.state;
+    const { email, password } = this.state;
 
     this.setState({ error: '', loading: true });
 
-    // firebase.auth().signInWithEmailAndPassword(email, password)
-    // .then(this.onLoginSuccess.bind(this))
-    // .catch(() => {
-    //   firebase.auth().createUserWithEmailAndPassword(email, password)
-    //   .then(this.onLoginSuccess.bind(this))
-    //   .catch(this.onLoginFail.bind(this));
-    // });
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(this.onLoginSuccess.bind(this))
+    .catch(() => {
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(this.onLoginSuccess.bind(this))
+      .catch(this.onLoginFail.bind(this));
+    });
   }
 
   onLoginSuccess() {
@@ -39,12 +44,12 @@ class LoginForm extends React.Component {
   }
 
   renderButton() {
-    if (this.state.loading){
+    if (this.state.loading) {
       return <Spinner size='small' />;
     }
 
     return (
-      <Button onPress={this.onButtonPress}>
+      <Button onPress={() => this.onButtonPress()}>
         Log in
       </Button>
     );
@@ -59,7 +64,7 @@ class LoginForm extends React.Component {
               label='email'
               value={this.state.email}
               onChangeText={email => this.setState({ email })}
-             />
+            />
           </CardSection>
           <CardSection>
             <Input 

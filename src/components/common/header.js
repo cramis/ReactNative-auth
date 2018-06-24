@@ -29,4 +29,4 @@ const styles = {
     }
 };
 
-export {Header};
+export { Header };
