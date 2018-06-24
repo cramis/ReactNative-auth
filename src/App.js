@@ -8,13 +8,17 @@ import firebase from 'firebase';
 
 class App extends Component {
 
+  // 로그인 여부
   state = {
     loggedIn: false
   }
 
   componentWillMount() {
+    // firebase 설정
     this.initializeFirebase();
 
+
+    // firebase 로그인 여부 확인
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ loggedIn: true });
@@ -37,6 +41,7 @@ class App extends Component {
     firebase.initializeApp(config);
   }
   
+  // 로그인 여부에 따른 컨텐츠 여부
   renderContent() {
     switch (this.state.loggedIn) {
       case true:
